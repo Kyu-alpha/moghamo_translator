@@ -1,0 +1,22 @@
+# Model weights - too large for GitHub, and shouldn't be versioned like code.
+# Keep a copy in your Drive/Colab and just link to it from the README instead.
+server/model/
+*.bin
+*.pt
+*.pth
+*.h5
+*.onnx
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Generated at runtime
+server/generated_audio/
+local_test/test_clip.wav
+
+# OS/editor cruft
+.DS_Store
+.vscode/
