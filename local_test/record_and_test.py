@@ -22,9 +22,14 @@ Then run this:
 import io
 
 import requests
-import simpleaudio as sa
 import sounddevice as sd
 import soundfile as sf
+
+try:
+    import winsound  # built into Python on Windows - no install needed
+    HAS_WINSOUND = True
+except ImportError:
+    HAS_WINSOUND = False  # not on Windows - falls back to simpleaudio below
 
 SERVER_URL = "http://localhost:8000/translate"
 SAMPLE_RATE = 16000
@@ -76,9 +81,18 @@ def play_result(data):
         return
 
     r = requests.get(audio_url)
-    wave_obj = sa.WaveObject.from_wave_file(io.BytesIO(r.content))
-    play_obj = wave_obj.play()
-    play_obj.wait_done()
+
+    if HAS_WINSOUND:
+        # winsound needs an actual file on disk, not bytes in memory
+        temp_path = "temp_playback.wav"
+        with open(temp_path, "wb") as f:
+            f.write(r.content)
+        winsound.PlaySound(temp_path, winsound.SND_FILENAME)
+    else:
+        import simpleaudio as sa  # only imported here if actually needed
+        wave_obj = sa.WaveObject.from_wave_file(io.BytesIO(r.content))
+        play_obj = wave_obj.play()
+        play_obj.wait_done()
 
 
 if __name__ == "__main__":

@@ -13,6 +13,7 @@ Plug in your own model in translate_en_to_moghamo() / translate_moghamo_to_en().
 
 import io
 import os
+import tempfile
 import uuid
 
 import numpy as np
@@ -77,7 +78,7 @@ async def translate(request: Request):
 
     # Save the incoming WAV so Whisper can read it
     audio_np, sr = sf.read(io.BytesIO(raw_bytes))
-    tmp_path = f"/tmp/{uuid.uuid4()}.wav"
+    tmp_path = os.path.join(tempfile.gettempdir(), f"{uuid.uuid4()}.wav")
     sf.write(tmp_path, audio_np, sr)
 
     stt_result = whisper_model.transcribe(tmp_path)
