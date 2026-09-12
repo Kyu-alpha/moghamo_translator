@@ -25,9 +25,9 @@ import network
 import time
 import urequests
 
-SSID = "YOUR_WIFI_SSID"
-PASSWORD = "YOUR_WIFI_PASSWORD"
-SERVER_URL = "http://YOUR_SERVER_IP:8000/translate"  # your laptop's LAN IP + port 8000
+SSID = "clout 2.4g"
+PASSWORD = "Bamenda4124"
+SERVER_URL = "http://192.168.0.243:8000/translate"  # your laptop's LAN IP + port 8000
 
 
 def connect_wifi():
